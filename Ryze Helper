@@ -13,9 +13,11 @@ function OnLoad()
 	 Config:addParam("combo", "Team Fight mode", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
 	 Config:addParam("asf", "1v1 Mode", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
 	 Config:addParam("asdf", "1v1 with minions around", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
+	 Config:addParam("chase", "Chase Mode", SCRIPT_PARAM_ONKEYDOWN, false, string.byte(" "))
 	 Config:permaShow("combo")
 	 Config:permaShow("asf")
 	 Config:permaShow("asdf")
+	 Config:permaShow("chase")
 	 ola()
 	
 		 --Create a target selector
@@ -33,6 +35,7 @@ function OnTick()
 		   --Search for enemies
 			 ts:update()
 	   if (ts.target ~= nil) then
+		 end
 			 
 			 --1v1
 			 if (Config.asf) then
@@ -90,7 +93,25 @@ function OnTick()
 							 if (myHero:CanUseSpell(_E) == READY) then
 									 CastSpell(_E, ts.target)
 								end
+			 --Chase mode
+			 if (Config.chase) then
+						 --Cast R
+						 if (myHero:CanUseSpell(_R) == READY) then
+									 CastSpell (_R)
+						 end
+						 	 --Cast W
+							 if (myHero:CanUseSpell(_W) == READY) then
+									 CastSpell(_W, ts.target)
+						 end
+						 --Cast Q
+							 if (myHero:CanUseSpell(_Q) == READY) then
+									CastSpell(_Q, ts.target)
+						 end
+						 --Cast E
+							 if (myHero:CanUseSpell(_E) == READY) then
+									 CastSpell(_E, ts.target)
 			 end
+end
 end
 end
 end
